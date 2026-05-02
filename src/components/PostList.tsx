@@ -25,7 +25,7 @@ export function PostList({ summaries, readSlugs }: Props) {
             {s.excerpt && <div className="post-excerpt">{s.excerpt[lang]}</div>}
             {s.meta.tags.length > 0 && <div className="post-tags">{s.meta.tags.map(t => `#${t}`).join(' ')}</div>}
           </div>
-          <div className="meta-right">{s.meta.readingTime[lang]} {t('post.min')} · {s.meta.slug}</div>
+          <div className="meta-right">{s.meta.readingTime[lang]} {t('post.min')}</div>
         </Link>
       ))}
     </div>
