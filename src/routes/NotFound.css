@@ -1,0 +1,21 @@
+.notfound {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+.notfound .cmd {
+  color: var(--pink);
+  font-family: inherit;
+  font-size: 13px;
+  margin: 0 0 24px;
+}
+.notfound .suggest {
+  color: var(--fg-dim);
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.notfound ul { list-style: none; padding: 0; }
+.notfound li { padding: 4px 0; }
+.notfound li a { font-size: 13px; }
