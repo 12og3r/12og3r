@@ -23,7 +23,10 @@ export function TopBar({ articleFilename, onSkip }: Props) {
       <nav className="topnav">
         <Link to={`/${lang}`} className={isHome ? 'active' : ''}>~</Link>
         {articleFilename ? (
-          <span className="filename">{articleFilename}</span>
+          <>
+            <span className="path-sep" aria-hidden="true">/</span>
+            <span className="filename">{articleFilename}</span>
+          </>
         ) : (
           <Link to={`/${lang}/about`} className={isAbout ? 'active' : ''}>{t('nav.about')}</Link>
         )}

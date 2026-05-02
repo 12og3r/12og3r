@@ -33,9 +33,10 @@ describe('TopBar', () => {
     expect(screen.getByText('中文')).toBeInTheDocument();
   });
 
-  it('replaces /about with article filename when articleFilename is provided', () => {
-    setup({ articleFilename: '/No_Farewell_Motiff.md' });
-    expect(screen.getByText('/No_Farewell_Motiff.md')).toBeInTheDocument();
+  it('replaces /about with article filename + path separator', () => {
+    setup({ articleFilename: 'No_Farewell_Motiff.md' });
+    expect(screen.getByText('No_Farewell_Motiff.md')).toBeInTheDocument();
+    expect(screen.getByText('/')).toBeInTheDocument();
     expect(screen.queryByText('/about')).not.toBeInTheDocument();
   });
 

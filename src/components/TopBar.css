@@ -42,6 +42,11 @@
 }
 .topnav a:hover { color: var(--green) !important; background: transparent !important; }
 .topnav a.active { color: var(--green) !important; border-bottom: 1px solid var(--green) !important; padding-bottom: 2px; }
+.topnav .path-sep {
+  color: var(--fg-faint);
+  font-size: 12px;
+  user-select: none;
+}
 .topnav .filename {
   color: var(--cyan);
   font-size: 11px;
