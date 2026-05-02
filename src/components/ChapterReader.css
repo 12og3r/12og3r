@@ -18,6 +18,8 @@
 }
 .skip-btn {
   color: var(--fg-dim);
+  background: transparent;
+  font: inherit;
   font-size: 10px;
   letter-spacing: 1.5px;
   cursor: pointer;
@@ -43,12 +45,15 @@
 }
 .continue-prompt {
   display: block;
+  width: calc(100% + 40px);
   margin: 28px -20px;
   padding: 18px 20px;
   background: rgba(0, 255, 102, 0.04);
+  border: 0;
   border-top: 1px solid var(--green-line);
   border-bottom: 1px solid var(--green-line);
   color: var(--green);
+  font: inherit;
   font-size: 13px;
   cursor: pointer;
   user-select: none;

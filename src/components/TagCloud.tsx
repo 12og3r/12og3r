@@ -11,13 +11,14 @@ export function TagCloud({ counts, selected, onToggle }: Props) {
   return (
     <div className="tag-cloud">
       {tags.map(([tag, count]) => (
-        <span
+        <button
+          type="button"
           key={tag}
           className={`tag-pill ${selected.includes(tag) ? 'selected' : ''}`}
           onClick={() => onToggle(tag)}
         >
           #{tag}<span className="count">{count}</span>
-        </span>
+        </button>
       ))}
     </div>
   );

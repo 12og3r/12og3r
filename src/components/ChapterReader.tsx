@@ -47,7 +47,7 @@ export function ChapterReader({ chapters, reduceMotion, onComplete }: Props) {
       <div className="chapter-topbar">
         <span className="progress">{t('post.chapter')} {Math.min(unlockedIdx + 1, chapters.length)} / {chapters.length}</span>
         {!reduceMotion && unlockedIdx < chapters.length - 1 && (
-          <span className="skip-btn" onClick={skipAll}>{t('post.skip')}</span>
+          <button type="button" className="skip-btn" onClick={skipAll}>{t('post.skip')}</button>
         )}
       </div>
       {chapters.map((ch, i) => (
@@ -83,9 +83,9 @@ function ChapterBlock({ chapter, locked, active, showContinue, isMobile, onConti
       <div className="chapter-title">// {chapter.title}</div>
       <pre className="chapter-body">{display}</pre>
       {showContinue && done && (
-        <div className="continue-prompt" onClick={onContinue}>
+        <button type="button" className="continue-prompt" onClick={onContinue}>
           {isMobile ? t('post.continue.mobile') : t('post.continue.desktop')}
-        </div>
+        </button>
       )}
     </div>
   );

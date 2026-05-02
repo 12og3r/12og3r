@@ -7,13 +7,14 @@ export function LangSwitcher() {
   return (
     <div className="lang-switcher">
       {(['en', 'zh'] as Lang[]).map(l => (
-        <span
+        <button
+          type="button"
           key={l}
           className={`lang-pill ${lang === l ? 'active' : ''}`}
           onClick={() => setLang(l)}
         >
           {l === 'en' ? 'EN' : '中文'}
-        </span>
+        </button>
       ))}
     </div>
   );

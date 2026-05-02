@@ -1,8 +1,10 @@
 .lang-switcher { display: flex; gap: 4px; }
 .lang-pill {
   color: var(--fg-faint);
+  background: transparent;
   border: 1px solid var(--green-line-soft);
   padding: 4px 9px;
+  font: inherit;
   font-size: 10px;
   letter-spacing: 1px;
   cursor: pointer;

@@ -1,8 +1,10 @@
 .tag-cloud { display: flex; flex-wrap: wrap; gap: 4px; }
 .tag-pill {
   border: 1px solid var(--green-line-soft);
+  background: transparent;
   color: var(--green-dim);
   padding: 3px 8px;
+  font: inherit;
   font-size: 11px;
   cursor: pointer;
   user-select: none;

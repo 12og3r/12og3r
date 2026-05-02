@@ -53,7 +53,7 @@ export default function Home() {
             <div className="filter-status">
               <span className="label">{t('filter.label')}</span>
               {selected.map(tag => <span key={tag} className="selected-tag">#{tag}</span>)}
-              <span className="clear" onClick={clear}>{t('filter.clear')}</span>
+              <button type="button" className="clear" onClick={clear}>{t('filter.clear')}</button>
             </div>
           )}
           <PostList summaries={filtered} readSlugs={readSlugs} />

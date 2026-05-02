@@ -49,8 +49,10 @@
 }
 .filter-status .clear {
   color: var(--pink);
+  background: transparent;
   cursor: pointer;
   margin-left: auto;
+  font: inherit;
   font-size: 10px;
   letter-spacing: 1px;
   text-transform: uppercase;
