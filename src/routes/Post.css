@@ -1,0 +1,19 @@
+.loading { padding: 60px 20px; color: var(--fg-dim); text-align: center; font-size: 12px; letter-spacing: 2px; }
+.post-end {
+  max-width: 720px;
+  margin: 40px auto;
+  padding: 32px 20px;
+  text-align: center;
+  border-top: 1px dashed var(--green-line);
+}
+.end-mark { color: var(--green); font-size: 13px; letter-spacing: 3px; padding: 12px 0; }
+.end-note { color: var(--fg-faint); font-size: 11px; }
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+  font-size: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.post-nav .prev, .post-nav .next { color: var(--green); border: none; }

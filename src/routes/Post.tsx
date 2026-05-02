@@ -1,6 +1,46 @@
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, Link, Navigate } from 'react-router-dom';
+import { TopBar } from '@/components/TopBar';
+import { ChapterReader } from '@/components/ChapterReader';
+import { useI18n } from '@/hooks/useI18n';
+import { useReadStatus } from '@/hooks/useReadStatus';
+import { loadAllPosts } from '@/lib/content';
+import type { Post } from '@/types';
+import './Post.css';
 
-export default function Post() {
+export default function PostRoute() {
   const { slug } = useParams();
-  return <div data-testid="post">post: {slug}</div>;
+  const { lang, t } = useI18n();
+  const { markRead } = useReadStatus();
+  const [posts, setPosts] = useState<Post[] | null>(null);
+  const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  useEffect(() => { loadAllPosts().then(setPosts); }, []);
+
+  if (posts === null) return <div className="loading">loading...</div>;
+
+  const idx = posts.findIndex(p => p.meta.slug === slug);
+  if (idx === -1) return <Navigate to={`/${lang}/404`} replace />;
+
+  const post = posts[idx];
+  const prev = posts[idx + 1];
+  const next = posts[idx - 1];
+  const chapters = post.chapters[lang];
+
+  const onComplete = () => markRead(post.meta.slug);
+
+  return (
+    <>
+      <TopBar />
+      <ChapterReader chapters={chapters} reduceMotion={reduceMotion} onComplete={onComplete} />
+      <div className="post-end">
+        <div className="end-mark">{t('post.end')}</div>
+        <div className="end-note">{t('post.endNote')}</div>
+        <nav className="post-nav">
+          {prev && <Link to={`/${lang}/posts/${prev.meta.slug}`} className="prev">{t('post.prev')}: {prev.chapters[lang][0]?.title}</Link>}
+          {next && <Link to={`/${lang}/posts/${next.meta.slug}`} className="next">{next.chapters[lang][0]?.title} :{t('post.next')}</Link>}
+        </nav>
+      </div>
+    </>
+  );
 }
