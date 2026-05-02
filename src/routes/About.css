@@ -1,0 +1,13 @@
+.about {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+.about pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--fg);
+}
