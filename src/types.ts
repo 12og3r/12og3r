@@ -21,6 +21,7 @@ export interface Post {
 export interface PostSummary {
   meta: PostMeta;
   title: { en: string; zh: string };  // 文章主标题（取第一章 title 或 frontmatter 中标题字段）
+  excerpt?: { en: string; zh: string };
 }
 
 export interface NowEntry {
