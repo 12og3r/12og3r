@@ -73,6 +73,7 @@ a, a:visited {
   border-bottom: 1px dotted var(--green);
 }
 a:hover { background: var(--green); color: #000; }
+a:focus-visible { outline: 1px solid var(--green); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
   body::before, body::after { display: none; }
