@@ -1,0 +1,24 @@
+.panel {
+  border: 1px solid var(--green-line);
+  background: var(--green-bg-soft);
+  padding: 12px 14px;
+}
+.panel-title {
+  color: var(--fg-dim);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed var(--green-line);
+}
+.now-line { font-size: 11px; color: #aaa; line-height: 1.7; padding: 2px 0; }
+.now-line .k { color: var(--fg-dim); font-size: 10px; }
+.now-updated {
+  font-size: 9px;
+  color: var(--fg-faint);
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--green-line);
+  letter-spacing: 1px;
+}
