@@ -1,0 +1,19 @@
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 4px; }
+.tag-pill {
+  border: 1px solid var(--green-line-soft);
+  color: var(--green-dim);
+  padding: 3px 8px;
+  font-size: 11px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.12s;
+}
+.tag-pill:hover { border-color: var(--green); background: rgba(0,255,102,0.1); }
+.tag-pill.selected {
+  background: var(--green);
+  color: #000;
+  border-color: var(--green);
+  font-weight: 700;
+}
+.tag-pill.selected .count { color: #003c1a; }
+.tag-pill .count { color: var(--fg-faint); font-size: 9px; margin-left: 4px; }
