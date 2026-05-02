@@ -50,36 +50,40 @@ export function ChapterReader({ chapters, reduceMotion, onComplete }: Props) {
           <button type="button" className="skip-btn" onClick={skipAll}>{t('post.skip')}</button>
         )}
       </div>
-      {chapters.map((ch, i) => (
-        <ChapterBlock
-          key={i}
-          chapter={ch}
-          locked={!reduceMotion && i > unlockedIdx}
-          active={!reduceMotion && i === unlockedIdx}
-          showContinue={!reduceMotion && i === unlockedIdx && i < chapters.length - 1}
-          isMobile={isMobile}
-          onContinue={advance}
-        />
-      ))}
+      {chapters.map((ch, i) => {
+        // Only render chapters that have been unlocked. Page height grows as
+        // the reader advances, instead of pre-allocating space for every chapter.
+        if (i > unlockedIdx) return null;
+        const active = !reduceMotion && i === unlockedIdx;
+        return (
+          <ChapterBlock
+            key={i}
+            chapter={ch}
+            active={active}
+            showContinue={active && i < chapters.length - 1}
+            isMobile={isMobile}
+            onContinue={advance}
+          />
+        );
+      })}
     </div>
   );
 }
 
 interface ChapterBlockProps {
   chapter: Chapter;
-  locked: boolean;
   active: boolean;
   showContinue: boolean;
   isMobile: boolean;
   onContinue: () => void;
 }
 
-function ChapterBlock({ chapter, locked, active, showContinue, isMobile, onContinue }: ChapterBlockProps) {
+function ChapterBlock({ chapter, active, showContinue, isMobile, onContinue }: ChapterBlockProps) {
   const { t } = useI18n();
-  const { text, done } = useTypewriter(chapter.body, { speedMs: 10, enabled: active && !locked });
-  const display = locked ? chapter.body : (active ? text : chapter.body);
+  const { text, done } = useTypewriter(chapter.body, { speedMs: 10, enabled: active });
+  const display = active ? text : chapter.body;
   return (
-    <div className={`chapter ${locked ? 'locked' : ''}`}>
+    <div className="chapter">
       <div className="chapter-title">// {chapter.title}</div>
       <pre className="chapter-body">{display}</pre>
       {showContinue && done && (

@@ -42,19 +42,17 @@ describe('ChapterReader (reduceMotion)', () => {
 });
 
 describe('ChapterReader (interactive)', () => {
-  it('only first chapter is visible initially', () => {
+  it('only first chapter is rendered initially', () => {
     render(
       <I18nProvider>
         <ChapterReader chapters={chapters} reduceMotion={false} onComplete={vi.fn()} />
       </I18nProvider>
     );
     const containers = document.querySelectorAll('.chapter');
-    expect(containers[0]).not.toHaveClass('locked');
-    expect(containers[1]).toHaveClass('locked');
-    expect(containers[2]).toHaveClass('locked');
+    expect(containers.length).toBe(1);
   });
 
-  it('skip button unlocks all chapters and calls onComplete', async () => {
+  it('skip button renders all chapters and calls onComplete', async () => {
     const onComplete = vi.fn();
     const user = userEvent.setup();
     render(
@@ -64,7 +62,7 @@ describe('ChapterReader (interactive)', () => {
     );
     await user.click(screen.getByText(/SKIP/i));
     const containers = document.querySelectorAll('.chapter');
-    expect(containers[2]).not.toHaveClass('locked');
+    expect(containers.length).toBe(3);
     expect(onComplete).toHaveBeenCalled();
   });
 });

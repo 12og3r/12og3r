@@ -38,10 +38,10 @@
   text-transform: uppercase;
 }
 .chapter-body { white-space: pre-wrap; word-wrap: break-word; margin: 0; font-family: inherit; font-size: 14px; line-height: 1.7; }
-.chapter.locked .chapter-title,
-.chapter.locked .chapter-body {
-  opacity: 0;
-  pointer-events: none;
+.chapter { animation: chapter-in 0.28s ease-out; }
+@keyframes chapter-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 .continue-prompt {
   display: block;
@@ -64,6 +64,5 @@
 }
 .continue-prompt:active { background: rgba(0, 255, 102, 0.12); }
 @media (prefers-reduced-motion: reduce) {
-  .chapter.locked .chapter-title,
-  .chapter.locked .chapter-body { opacity: 1; }
+  .chapter { animation: none; }
 }
