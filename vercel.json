@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/((?!rss\\.xml|rss-zh\\.xml|sitemap\\.xml|assets/).*)", "destination": "/index.html" }
+  ]
+}
