@@ -1,10 +1,12 @@
 en: |
   $ whoami
-  > Roger. android dev @ tiktok.
-  > writing about IPC, debugging,
-  > and things that bother me at 2:47 AM.
+  > Roger. android engineer by day,
+  > occasional WebAssembly / React / web hacker by night.
+  > writing about the messy parts of native, web,
+  > and the bridges between them.
 zh: |
   $ whoami
-  > Roger，TikTok Android 开发
-  > 写 IPC、debugging
-  > 以及凌晨 2:47 让我睡不着的事
+  > Roger，主业 Android 工程师，
+  > 业余也写 WebAssembly / React / Web 前端。
+  > 在这里写 native、web，
+  > 以及把两边粘起来时遇到的麻烦事。
