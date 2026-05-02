@@ -13,6 +13,10 @@ interface Props {
 export function ChapterReader({ chapters, reduceMotion, onComplete }: Props) {
   const { t } = useI18n();
   const [unlockedIdx, setUnlockedIdx] = useState(reduceMotion ? chapters.length - 1 : 0);
+  // When the user clicks SKIP we want every chapter — including the current
+  // one mid-typing — to fall back to its full body immediately, no further
+  // typewriter on anything.
+  const [skipped, setSkipped] = useState(false);
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
 
   useEffect(() => {
@@ -24,6 +28,7 @@ export function ChapterReader({ chapters, reduceMotion, onComplete }: Props) {
   }, [chapters.length]);
 
   const skipAll = useCallback(() => {
+    setSkipped(true);
     setUnlockedIdx(chapters.length - 1);
     onComplete();
   }, [chapters.length, onComplete]);
@@ -42,7 +47,7 @@ export function ChapterReader({ chapters, reduceMotion, onComplete }: Props) {
     <div className="chapter-reader">
       <div className="chapter-topbar">
         <span className="progress">{t('post.chapter')} {Math.min(unlockedIdx + 1, chapters.length)} / {chapters.length}</span>
-        {!reduceMotion && unlockedIdx < chapters.length - 1 && (
+        {!reduceMotion && !skipped && unlockedIdx < chapters.length - 1 && (
           <button type="button" className="skip-btn" onClick={skipAll}>{t('post.skip')}</button>
         )}
       </div>
@@ -50,7 +55,9 @@ export function ChapterReader({ chapters, reduceMotion, onComplete }: Props) {
         // Only render chapters that have been unlocked. Page height grows as
         // the reader advances, instead of pre-allocating space for every chapter.
         if (i > unlockedIdx) return null;
-        const active = !reduceMotion && i === unlockedIdx;
+        // Skip → no chapter is "active": every chapter renders its full body
+        // statically, no more typing on anyone.
+        const active = !reduceMotion && !skipped && i === unlockedIdx;
         const isLast = i === chapters.length - 1;
         return (
           <ChapterBlock
