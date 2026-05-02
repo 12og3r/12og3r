@@ -3,6 +3,7 @@ import { TopBar } from '@/components/TopBar';
 import { TagCloud } from '@/components/TagCloud';
 import { NowPanel } from '@/components/NowPanel';
 import { PostList } from '@/components/PostList';
+import { TermBlock } from '@/components/TermBlock';
 import { useI18n } from '@/hooks/useI18n';
 import { useTagFilter } from '@/hooks/useTagFilter';
 import { useReadStatus } from '@/hooks/useReadStatus';
@@ -58,7 +59,7 @@ export default function Home() {
           <NowPanel />
         </aside>
         <main className="main">
-          <pre className="whoami">{WHOAMI[lang]}</pre>
+          <TermBlock text={WHOAMI[lang]} className="whoami" />
           <h2>
             <span>{t('posts.title')} <span className="dim">{t(selected.length ? 'count.match' : 'count.entries', { n: filtered.length })}</span></span>
             <span className="dim">{t('posts.sort')}: <span style={{ color: 'var(--green)' }}>{t('posts.sort.newest')}</span></span>

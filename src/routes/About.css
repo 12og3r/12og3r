@@ -5,41 +5,6 @@
 }
 
 .about-content {
-  font-family: inherit;
   font-size: 13px;
   line-height: 1.85;
-  white-space: pre-wrap;
-  word-wrap: break-word;
 }
-
-.about-blank {
-  line-height: 1;
-  height: 0.6em;
-}
-
-/* $ command  →  green prompt + bright command */
-.about-cmd .prompt { color: var(--green); font-weight: 700; }
-.about-cmd .cmd    { color: #fff; font-weight: 500; }
-
-/* > quote  →  yellow (zsh user/host vibe) */
-.about-quote { color: var(--yellow); font-weight: 500; }
-
-/* ── section ──  →  pink label, dim rule */
-.about-section {
-  margin: 22px 0 6px;
-  letter-spacing: 1.5px;
-}
-.about-section .rule  { color: var(--green-line); }
-.about-section .label {
-  color: var(--pink);
-  text-transform: uppercase;
-  font-weight: 700;
-  padding: 0 2px;
-}
-
-/* default body text */
-.about-body { color: var(--fg); }
-
-/* `a · b · c` lists  →  cyan items, dim dots */
-.about-list .item { color: var(--cyan); }
-.about-list .dot  { color: var(--fg-faint); }

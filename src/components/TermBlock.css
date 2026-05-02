@@ -1,0 +1,35 @@
+.term-block {
+  font-family: inherit;
+}
+
+.term-blank {
+  line-height: 1;
+  height: 0.6em;
+}
+
+/* $ command  →  green prompt + bright command */
+.term-cmd .term-prompt   { color: var(--green); font-weight: 700; }
+.term-cmd .term-cmdtext  { color: #fff; font-weight: 500; }
+
+/* > quote  →  yellow (zsh user/host vibe) */
+.term-quote { color: var(--yellow); font-weight: 500; }
+
+/* ── section ──  →  pink label, dim rule */
+.term-section {
+  margin: 22px 0 6px;
+  letter-spacing: 1.5px;
+}
+.term-section .term-rule  { color: var(--green-line); }
+.term-section .term-label {
+  color: var(--pink);
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 0 2px;
+}
+
+/* default body text */
+.term-body { color: var(--fg); }
+
+/* `a · b · c` lists  →  cyan items, dim dots */
+.term-list .term-item { color: var(--cyan); }
+.term-list .term-dot  { color: var(--fg-faint); }
