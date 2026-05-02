@@ -116,8 +116,11 @@ function ChapterBlock({ chapter, active, showContinue, isMobile, onContinue, onD
     <div className="chapter">
       <pre className="chapter-body">
         {display}
-        {active && done && text === chapter.body && (
-          <span className="cursor" aria-hidden="true">█</span>
+        {active && (
+          <span
+            className={`cursor ${done && text === chapter.body ? 'cursor-idle' : ''}`}
+            aria-hidden="true"
+          >█</span>
         )}
       </pre>
       {showCue && (
