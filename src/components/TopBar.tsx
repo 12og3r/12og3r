@@ -20,11 +20,15 @@ export function TopBar({ articleFilename, onSkip }: Props) {
         <span className="dot" />Roger's Space
       </Link>
       <nav className="topnav">
-        <Link to={`/${lang}`} className={isHome ? 'active' : ''}>~</Link>
-        {articleFilename && (
+        {!isHome && (
           <>
-            <span className="path-sep" aria-hidden="true">/</span>
-            <span className="filename">{articleFilename}</span>
+            <Link to={`/${lang}`}>~</Link>
+            {articleFilename && (
+              <>
+                <span className="path-sep" aria-hidden="true">/</span>
+                <span className="filename">{articleFilename}</span>
+              </>
+            )}
           </>
         )}
       </nav>

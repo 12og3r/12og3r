@@ -21,10 +21,15 @@ describe('TopBar', () => {
     expect(screen.getByText(/Roger's Space/i)).toBeInTheDocument();
   });
 
-  it('renders only the home nav link by default (no /about link)', () => {
+  it('hides ~ on the home page itself (you are already home)', () => {
     setup();
-    expect(screen.getByText('~')).toBeInTheDocument();
+    expect(screen.queryByText('~')).not.toBeInTheDocument();
     expect(screen.queryByText('/about')).not.toBeInTheDocument();
+  });
+
+  it('shows ~ on non-home pages', () => {
+    setup({}, '/en/posts/abc');
+    expect(screen.getByText('~')).toBeInTheDocument();
   });
 
   it('renders language switcher', () => {
@@ -33,10 +38,11 @@ describe('TopBar', () => {
     expect(screen.getByText('中文')).toBeInTheDocument();
   });
 
-  it('renders article filename with path separator when articleFilename is provided', () => {
-    setup({ articleFilename: 'No_Farewell_Motiff.md' });
-    expect(screen.getByText('No_Farewell_Motiff.md')).toBeInTheDocument();
+  it('renders article filename with ~ and path separator on non-home pages', () => {
+    setup({ articleFilename: 'No_Farewell_Motiff.md' }, '/en/posts/abc');
+    expect(screen.getByText('~')).toBeInTheDocument();
     expect(screen.getByText('/')).toBeInTheDocument();
+    expect(screen.getByText('No_Farewell_Motiff.md')).toBeInTheDocument();
   });
 
   it('renders skip button and triggers onSkip when clicked', async () => {
