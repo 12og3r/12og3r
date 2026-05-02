@@ -128,15 +128,16 @@ npm install -D vite @vitejs/plugin-react typescript @types/react @types/react-do
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src", "tests"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
 ```
+
+Note: `baseUrl` is intentionally omitted — TypeScript 6+ deprecates it and requires path values to start with `./` when no `baseUrl` is set. Resolution under `moduleResolution: "bundler"` is identical.
 
 - [ ] **Step 4: 写 `tsconfig.node.json`**
 
@@ -210,6 +211,12 @@ export default function App() {
 }
 ```
 
+- [ ] **Step 8b: 写 `src/vite-env.d.ts`**（Vite 客户端环境的 ambient 类型，CSS side-effect import 需要）
+
+```ts
+/// <reference types="vite/client" />
+```
+
 - [ ] **Step 9: 写最小 `src/styles/global.css`**
 
 ```css
@@ -217,11 +224,12 @@ export default function App() {
 html, body { margin: 0; padding: 0; background: #000; color: #ccc; min-height: 100vh; }
 ```
 
-- [ ] **Step 10: 添加 npm 脚本到 `package.json`**
+- [ ] **Step 10: 修改 `package.json`**
 
-修改 `package.json` 中的 `scripts`：
+在 `package.json` 顶层加 `"private": true`（防止误发布到 npm registry），并替换 `scripts`：
 
 ```json
+"private": true,
 "scripts": {
   "dev": "vite",
   "build": "tsc && vite build",
@@ -230,13 +238,19 @@ html, body { margin: 0; padding: 0; background: #000; color: #ccc; min-height: 1
 }
 ```
 
-- [ ] **Step 11: 验证 dev 服务启动**
+也建议清理 `npm init -y` 留下的 `"main": "index.js"` / `"directories"` / 空 `description` / `keywords` 等无用字段（不阻塞构建，但 `main: "index.js"` 是误导）。
 
+- [ ] **Step 11: 验证完整 toolchain**
+
+```bash
+npm run type-check    # 期望 exit 0
+npm run build         # 期望 exit 0，产出 dist/index.html + dist/assets/
+```
+
+可选 dev 验证（需要时打开浏览器看 `http://localhost:5173/` 上是否显示 "roger@blog: bootstrap ok."）：
 ```bash
 npm run dev
 ```
-
-预期：终端打印 `Local: http://localhost:5173/`，浏览器打开后看到绿色文字 "roger@blog: bootstrap ok."。Ctrl-C 关闭。
 
 - [ ] **Step 12: 提交**
 
