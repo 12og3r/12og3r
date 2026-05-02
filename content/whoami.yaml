@@ -2,11 +2,9 @@ en: |
   $ whoami
   > Roger. android engineer by day,
   > occasional WebAssembly / React / web hacker by night.
-  > writing about the messy parts of native, web,
-  > and the bridges between them.
+  > writing about the messy parts of native and web.
 zh: |
   $ whoami
   > Roger，主业 Android 工程师，
   > 业余也写 WebAssembly / React / Web 前端。
-  > 在这里写 native、web，
-  > 以及把两边粘起来时遇到的麻烦事。
+  > 在这里写 native 和 web 里那些麻烦事。
