@@ -84,7 +84,6 @@ export default function Home() {
       <footer>
         <span>{t('footer.copy')}</span> ·
         <a href="https://github.com/12og3r" target="_blank" rel="noreferrer">github</a> ·
-        <a href="/rss.xml">rss</a> ·
         <a href="https://x.com/12ug3r" target="_blank" rel="noreferrer">twitter</a>
       </footer>
     </>
