@@ -1,0 +1,19 @@
+.lang-switcher { display: flex; gap: 4px; }
+.lang-pill {
+  color: var(--fg-faint);
+  border: 1px solid var(--green-line-soft);
+  padding: 4px 9px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-transform: uppercase;
+  user-select: none;
+}
+.lang-pill:hover { color: var(--green); border-color: var(--green); }
+.lang-pill.active {
+  color: #000;
+  background: var(--green);
+  border-color: var(--green);
+  font-weight: 700;
+}
