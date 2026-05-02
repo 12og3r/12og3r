@@ -62,7 +62,14 @@
   text-transform: uppercase;
   touch-action: manipulation;
 }
+.continue-prompt {
+  animation: continue-in 0.3s ease-out;
+}
 .continue-prompt:active { background: rgba(0, 255, 102, 0.12); }
+@keyframes continue-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 @media (prefers-reduced-motion: reduce) {
-  .chapter { animation: none; }
+  .chapter, .continue-prompt { animation: none; }
 }

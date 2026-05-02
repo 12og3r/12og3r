@@ -81,12 +81,26 @@ interface ChapterBlockProps {
 function ChapterBlock({ chapter, active, showContinue, isMobile, onContinue }: ChapterBlockProps) {
   const { t } = useI18n();
   const { text, done } = useTypewriter(chapter.body, { speedMs: 10, enabled: active });
+  const [showCue, setShowCue] = useState(false);
+
+  // Only reveal the continue button after the chapter has FULLY typed out,
+  // and only after a short read-pause so it doesn't feel like the button
+  // pops in while content is still arriving.
+  useEffect(() => {
+    if (!showContinue || !done || text !== chapter.body) {
+      setShowCue(false);
+      return;
+    }
+    const tid = setTimeout(() => setShowCue(true), 350);
+    return () => clearTimeout(tid);
+  }, [showContinue, done, text, chapter.body]);
+
   const display = active ? text : chapter.body;
   return (
     <div className="chapter">
       <div className="chapter-title">// {chapter.title}</div>
       <pre className="chapter-body">{display}</pre>
-      {showContinue && done && (
+      {showCue && (
         <button type="button" className="continue-prompt" onClick={onContinue}>
           {isMobile ? t('post.continue.mobile') : t('post.continue.desktop')}
         </button>
