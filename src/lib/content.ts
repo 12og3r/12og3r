@@ -34,7 +34,13 @@ export function buildPostFromRawSources(raw: RawPostSources): Post {
   return { meta, chapters: { en, zh } };
 }
 
-export async function loadAllPosts(): Promise<Post[]> {
+let _cache: Promise<Post[]> | null = null;
+
+export function loadAllPosts(): Promise<Post[]> {
+  return _cache ??= _loadAllPostsImpl();
+}
+
+async function _loadAllPostsImpl(): Promise<Post[]> {
   const metaModules = import.meta.glob('/content/posts/*/meta.yaml', { query: '?raw', import: 'default' });
   const enModules = import.meta.glob('/content/posts/*/en.mdx', { query: '?raw', import: 'default' });
   const zhModules = import.meta.glob('/content/posts/*/zh.mdx', { query: '?raw', import: 'default' });
