@@ -13,6 +13,8 @@
   --green-bg-soft: rgba(0, 20, 8, 0.3);
   --yellow: #ffcc66;
   --pink: #ff66cc;
+  --cyan: #66e0ff;
+  --orange: #ff9966;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
   --font-zh: 'JetBrains Mono', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
