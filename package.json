@@ -9,7 +9,9 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && npm run build:rss && npm run build:sitemap",
+    "build:rss": "tsx scripts/build-rss.ts",
+    "build:sitemap": "tsx scripts/build-sitemap.ts",
     "preview": "vite preview",
     "type-check": "tsc --noEmit",
     "test": "vitest",
@@ -34,6 +36,7 @@
     "@vitejs/plugin-react": "^6.0.1",
     "gray-matter": "^4.0.3",
     "jsdom": "^29.1.1",
+    "tsx": "^4.21.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.10",
     "vitest": "^3.2.4",
