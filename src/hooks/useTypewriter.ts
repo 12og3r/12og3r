@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react';
 
 interface Options {
   speedMs: number;
@@ -20,22 +20,26 @@ function delayForChar(ch: string, base: number): number {
 
 export function useTypewriter(target: string, opts: Options): Result {
   const { speedMs, enabled } = opts;
-  const [text, setText] = useState(enabled ? '' : target);
-  const [done, setDone] = useState(!enabled);
-  const indexRef = useRef(0);
+  // Initial render shows the first character (not empty), so when a previously
+  // hidden chapter becomes visible there's no flash of empty content before
+  // typing starts.
+  const [text, setText] = useState(() => (enabled ? target.slice(0, 1) : target));
+  const [done, setDone] = useState(() => !enabled || target.length <= 1);
+  const indexRef = useRef(1);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const startedRef = useRef(false);
 
-  useEffect(() => {
+  // Sync setup runs BEFORE browser paint. When a locked chapter unlocks,
+  // its text state was the full body — without useLayoutEffect, the browser
+  // would paint that full body for one frame before the typewriter resets.
+  useLayoutEffect(() => {
     if (!enabled) {
       setText(target);
       setDone(true);
       return;
     }
-    // If target changes after we've already started typing once,
-    // snap to the full new target instead of replaying. This handles
-    // language switch mid-article: spec §8.4 says unlocked chapters
-    // should swap instantly, not retype.
+    // Mid-run target change (lang switch): snap to full new target,
+    // don't replay. Spec §8.4.
     if (startedRef.current) {
       if (timerRef.current) clearTimeout(timerRef.current);
       setText(target);
@@ -43,9 +47,16 @@ export function useTypewriter(target: string, opts: Options): Result {
       return;
     }
     startedRef.current = true;
-    indexRef.current = 0;
-    setText('');
-    setDone(false);
+    indexRef.current = 1;
+    setText(target.slice(0, 1));
+    setDone(target.length <= 1);
+  }, [target, enabled]);
+
+  // Typewriter timer runs after paint.
+  useEffect(() => {
+    if (!enabled) return;
+    if (!startedRef.current) return;
+    if (indexRef.current >= target.length) return;
 
     const tick = () => {
       const i = indexRef.current;

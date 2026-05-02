@@ -6,9 +6,9 @@ describe('useTypewriter', () => {
   beforeEach(() => vi.useFakeTimers());
   afterEach(() => vi.useRealTimers());
 
-  it('starts with empty text', () => {
+  it('starts with the first character (not empty) to avoid flash', () => {
     const { result } = renderHook(() => useTypewriter('hello', { speedMs: 10, enabled: true }));
-    expect(result.current.text).toBe('');
+    expect(result.current.text).toBe('h');
     expect(result.current.done).toBe(false);
   });
 
