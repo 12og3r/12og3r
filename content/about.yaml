@@ -1,18 +1,65 @@
 en: |
   $ cat about.md
 
-  > Roger — android engineer @ tiktok.
+  > Roger
+  > android engineer @ tiktok
 
-  Previously: motiff (design tool), paraflow, hulu.
-  BUPT '15.
+  ── now ──
+  AI features in video editing tools.
+  Kotlin, performance, the parts of the runtime
+  that don't show up in product screenshots.
 
-  reach me: github.com/12og3r
+  ── before ──
+  paraflow      · react, typescript
+  motiff        · react + wasm-compiled c++ rendering
+  hulu          · software engineering intern
+
+  ── focus ──
+  performance-sensitive client-side software,
+  where the interesting work happens close to the runtime.
+  native android, web, and the messy seams between them.
+
+  ── open source ──
+  ScrollableSelectLayout    · jetpack compose
+  SmartSwipeRefresh         · jetpack compose
+  deepl-client              · kotlin
+
+  ── stack ──
+  kotlin · android studio · gradle
+  typescript · react · webassembly · c++
+
+  $ whereto
+  > github.com/12og3r
 zh: |
   $ cat about.md
 
-  > Roger — 字节跳动 Android 工程师
+  > Roger
+  > 字节跳动 · Android 工程师
 
-  此前：Motiff（设计工具）、Paraflow、Hulu。
-  北邮 '15 届毕业。
+  ── 现在 ──
+  在做剪辑工具里的 AI 功能。
+  Kotlin、性能优化，那些不会出现在
+  产品截图里、但贴近 runtime 的事情。
 
-  联系方式：github.com/12og3r
+  ── 之前 ──
+  Paraflow      · React、TypeScript
+  Motiff        · React + WebAssembly 编译的 C++ 渲染
+  Hulu          · 软件工程实习生
+
+  ── 关注 ──
+  性能敏感的客户端软件 ——
+  那些贴近 runtime、有意思的部分。
+  Android 原生、Web，
+  以及两者交界处那些麻烦的接缝。
+
+  ── 开源 ──
+  ScrollableSelectLayout    · Jetpack Compose
+  SmartSwipeRefresh         · Jetpack Compose
+  deepl-client              · Kotlin
+
+  ── 技术栈 ──
+  Kotlin · Android Studio · Gradle
+  TypeScript · React · WebAssembly · C++
+
+  $ whereto
+  > github.com/12og3r
