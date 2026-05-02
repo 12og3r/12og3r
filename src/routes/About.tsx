@@ -11,7 +11,7 @@ export default function About() {
   const { lang } = useI18n();
   return (
     <>
-      <TopBar />
+      <TopBar articleFilename="about_me.md" />
       <main className="about">
         <TermBlock text={ABOUT[lang]} className="about-content" />
       </main>

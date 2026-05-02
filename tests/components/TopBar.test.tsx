@@ -21,10 +21,10 @@ describe('TopBar', () => {
     expect(screen.getByText(/Roger's Space/i)).toBeInTheDocument();
   });
 
-  it('renders home and about nav links by default', () => {
+  it('renders only the home nav link by default (no /about link)', () => {
     setup();
     expect(screen.getByText('~')).toBeInTheDocument();
-    expect(screen.getByText('/about')).toBeInTheDocument();
+    expect(screen.queryByText('/about')).not.toBeInTheDocument();
   });
 
   it('renders language switcher', () => {
@@ -33,11 +33,10 @@ describe('TopBar', () => {
     expect(screen.getByText('中文')).toBeInTheDocument();
   });
 
-  it('replaces /about with article filename + path separator', () => {
+  it('renders article filename with path separator when articleFilename is provided', () => {
     setup({ articleFilename: 'No_Farewell_Motiff.md' });
     expect(screen.getByText('No_Farewell_Motiff.md')).toBeInTheDocument();
     expect(screen.getByText('/')).toBeInTheDocument();
-    expect(screen.queryByText('/about')).not.toBeInTheDocument();
   });
 
   it('renders skip button and triggers onSkip when clicked', async () => {

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { TopBar } from '@/components/TopBar';
 import { TagCloud } from '@/components/TagCloud';
 import { NowPanel } from '@/components/NowPanel';
@@ -59,7 +60,13 @@ export default function Home() {
           <NowPanel />
         </aside>
         <main className="main">
-          <TermBlock text={WHOAMI[lang]} className="whoami" />
+          <div className="whoami">
+            <TermBlock text={WHOAMI[lang]} />
+            <Link to={`/${lang}/about`} className="whoami-link">
+              <span className="prompt">$</span>{' '}
+              <span className="cmd-text">open about_me.md</span>
+            </Link>
+          </div>
           <h2>
             <span>{t('posts.title')} <span className="dim">{t(selected.length ? 'count.match' : 'count.entries', { n: filtered.length })}</span></span>
             <span className="dim">{t('posts.sort')}: <span style={{ color: 'var(--green)' }}>{t('posts.sort.newest')}</span></span>
