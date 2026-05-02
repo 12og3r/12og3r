@@ -43,9 +43,12 @@ export default function PostRoute() {
   const next = posts[idx - 1];
   const chapters = post.chapters[lang];
 
-  // Display the article like a path: spaces → underscores, append .md, prepend /
+  // Display the article like a path. Collapse any non-letter / non-digit run
+  // (spaces, commas, etc.) into a single underscore so titles like
+  // "No Farewell, Motiff" become "No_Farewell_Motiff" instead of
+  // "No_Farewell,_Motiff".
   const articleTitle = chapters[0]?.title || post.meta.slug;
-  const articleFilename = `/${articleTitle.replace(/\s+/g, '_')}.md`;
+  const articleFilename = `/${articleTitle.replace(/[^\p{L}\p{N}]+/gu, '_').replace(/^_|_$/g, '')}.md`;
 
   const showSkip = !reduceMotion && !skipped && !completed;
 
