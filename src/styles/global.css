@@ -1,2 +1,80 @@
-* { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; background: #000; color: #ccc; min-height: 100vh; }
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+:root {
+  --bg: #000;
+  --fg: #ccc;
+  --fg-dim: #888;
+  --fg-faint: #555;
+  --green: #00ff66;
+  --green-dim: #88ff88;
+  --green-shadow: rgba(0, 255, 102, 0.3);
+  --green-line: #1a3a1a;
+  --green-line-soft: #2a4a2a;
+  --green-bg-soft: rgba(0, 20, 8, 0.3);
+  --yellow: #ffcc66;
+  --pink: #ff66cc;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+  --font-zh: 'JetBrains Mono', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.65;
+  min-height: 100vh;
+  overscroll-behavior-y: none;
+}
+
+body[data-lang="zh"] {
+  font-family: var(--font-zh);
+  font-size: 13.5px;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg,
+    rgba(0,255,102,0.018) 0px, rgba(0,255,102,0.018) 1px,
+    transparent 1px, transparent 4px);
+  pointer-events: none;
+  z-index: 100;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 65%, rgba(0,0,0,0.4) 100%);
+  pointer-events: none;
+  z-index: 99;
+}
+
+body.lang-switching {
+  animation: glitch 0.4s;
+}
+
+@keyframes glitch {
+  0%, 100% { filter: none; }
+  20% { filter: hue-rotate(30deg) brightness(1.3); transform: translateX(-1px); }
+  40% { filter: hue-rotate(-30deg) brightness(0.9); transform: translateX(1px); }
+  60% { filter: brightness(1.5); }
+}
+
+a, a:visited {
+  color: var(--green);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--green);
+}
+a:hover { background: var(--green); color: #000; }
+
+@media (prefers-reduced-motion: reduce) {
+  body::before, body::after { display: none; }
+  body.lang-switching { animation: none; }
+}
