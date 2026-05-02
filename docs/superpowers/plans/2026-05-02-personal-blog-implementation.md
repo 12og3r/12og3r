@@ -1474,8 +1474,10 @@ describe('useTagFilter', () => {
 
 - [ ] **Step 2: 实现 `src/hooks/useTagFilter.ts`**
 
+注意：React Router v7 的 `setSearchParams` 是批处理异步的，不能把 `selected` 从 `searchParams.get` 派生。本地 useState 作为主源，useEffect 镜像到 URL。
+
 ```ts
-import { useCallback, useMemo } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 interface UseTagFilterResult {
@@ -1485,33 +1487,44 @@ interface UseTagFilterResult {
   matches: (postTags: string[]) => boolean;
 }
 
+function parseTags(raw: string | null): string[] {
+  return raw ? raw.split(',').filter(Boolean) : [];
+}
+
 export function useTagFilter(): UseTagFilterResult {
   const [searchParams, setSearchParams] = useSearchParams();
-  const selected = useMemo(() => {
-    const raw = searchParams.get('tags');
-    return raw ? raw.split(',').filter(Boolean) : [];
+  const [selected, setSelected] = useState<string[]>(() => parseTags(searchParams.get('tags')));
+
+  // Sync local state when URL changes externally (back/forward navigation).
+  useEffect(() => {
+    const fromUrl = parseTags(searchParams.get('tags'));
+    setSelected(prev => (prev.join(',') === fromUrl.join(',') ? prev : fromUrl));
   }, [searchParams]);
 
-  const toggle = useCallback((tag: string) => {
-    const next = selected.includes(tag)
-      ? selected.filter(t => t !== tag)
-      : [...selected, tag];
+  // Mirror local state to URL.
+  useEffect(() => {
     const params = new URLSearchParams(searchParams);
-    if (next.length === 0) params.delete('tags');
-    else params.set('tags', next.join(','));
+    const current = parseTags(params.get('tags'));
+    if (current.join(',') === selected.join(',')) return;
+    if (selected.length === 0) params.delete('tags');
+    else params.set('tags', selected.join(','));
     setSearchParams(params, { replace: true });
-  }, [selected, searchParams, setSearchParams]);
-
-  const clear = useCallback(() => {
-    const params = new URLSearchParams(searchParams);
-    params.delete('tags');
-    setSearchParams(params, { replace: true });
-  }, [searchParams, setSearchParams]);
-
-  const matches = useCallback((postTags: string[]) => {
-    if (selected.length === 0) return true;
-    return selected.some(t => postTags.includes(t));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
+
+  const toggle = useCallback((tag: string) => {
+    setSelected(prev => (prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]));
+  }, []);
+
+  const clear = useCallback(() => setSelected([]), []);
+
+  const matches = useCallback(
+    (postTags: string[]) => {
+      if (selected.length === 0) return true;
+      return selected.some(t => postTags.includes(t));
+    },
+    [selected]
+  );
 
   return { selected, toggle, clear, matches };
 }
