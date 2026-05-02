@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useI18n } from '@/hooks/useI18n';
 import { useTypewriter } from '@/hooks/useTypewriter';
 import type { Chapter } from '@/types';
@@ -20,12 +20,8 @@ export function ChapterReader({ chapters, reduceMotion, onComplete }: Props) {
   }, [reduceMotion, onComplete]);
 
   const advance = useCallback(() => {
-    setUnlockedIdx(i => {
-      const next = Math.min(i + 1, chapters.length - 1);
-      if (next === chapters.length - 1) onComplete();
-      return next;
-    });
-  }, [chapters.length, onComplete]);
+    setUnlockedIdx(i => Math.min(i + 1, chapters.length - 1));
+  }, [chapters.length]);
 
   const skipAll = useCallback(() => {
     setUnlockedIdx(chapters.length - 1);
@@ -55,14 +51,16 @@ export function ChapterReader({ chapters, reduceMotion, onComplete }: Props) {
         // the reader advances, instead of pre-allocating space for every chapter.
         if (i > unlockedIdx) return null;
         const active = !reduceMotion && i === unlockedIdx;
+        const isLast = i === chapters.length - 1;
         return (
           <ChapterBlock
             key={i}
             chapter={ch}
             active={active}
-            showContinue={active && i < chapters.length - 1}
+            showContinue={active && !isLast}
             isMobile={isMobile}
             onContinue={advance}
+            onDone={isLast ? onComplete : undefined}
           />
         );
       })}
@@ -76,9 +74,10 @@ interface ChapterBlockProps {
   showContinue: boolean;
   isMobile: boolean;
   onContinue: () => void;
+  onDone?: () => void;
 }
 
-function ChapterBlock({ chapter, active, showContinue, isMobile, onContinue }: ChapterBlockProps) {
+function ChapterBlock({ chapter, active, showContinue, isMobile, onContinue, onDone }: ChapterBlockProps) {
   const { t } = useI18n();
   const { text, done } = useTypewriter(chapter.body, { speedMs: 10, enabled: active });
   const [showCue, setShowCue] = useState(false);
@@ -95,10 +94,19 @@ function ChapterBlock({ chapter, active, showContinue, isMobile, onContinue }: C
     return () => clearTimeout(tid);
   }, [showContinue, done, text, chapter.body]);
 
+  // For the final chapter, notify the parent once the typewriter has fully
+  // finished so the post-end block can be shown only after real completion.
+  const onDoneRef = useRef(onDone);
+  useEffect(() => { onDoneRef.current = onDone; }, [onDone]);
+  useEffect(() => {
+    if (active && done && text === chapter.body && onDoneRef.current) {
+      onDoneRef.current();
+    }
+  }, [active, done, text, chapter.body]);
+
   const display = active ? text : chapter.body;
   return (
     <div className="chapter">
-      <div className="chapter-title">// {chapter.title}</div>
       <pre className="chapter-body">{display}</pre>
       {showCue && (
         <button type="button" className="continue-prompt" onClick={onContinue}>

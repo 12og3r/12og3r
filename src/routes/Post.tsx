@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { TopBar } from '@/components/TopBar';
 import { ChapterReader } from '@/components/ChapterReader';
@@ -13,9 +13,20 @@ export default function PostRoute() {
   const { lang, t } = useI18n();
   const { markRead } = useReadStatus();
   const [posts, setPosts] = useState<Post[] | null>(null);
+  const [completed, setCompleted] = useState(false);
   const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   useEffect(() => { loadAllPosts().then(setPosts); }, []);
+
+  // Reset completion when navigating between posts.
+  useEffect(() => { setCompleted(false); }, [slug]);
+
+  const handleComplete = useCallback(() => {
+    if (slug) markRead(slug);
+    // Brief read-pause before the end block appears, mirrors the continue-cue
+    // timing so it doesn't pop in the instant typing finishes.
+    setTimeout(() => setCompleted(true), 350);
+  }, [markRead, slug]);
 
   if (posts === null) return <div className="loading">loading...</div>;
 
@@ -27,20 +38,26 @@ export default function PostRoute() {
   const next = posts[idx - 1];
   const chapters = post.chapters[lang];
 
-  const onComplete = () => markRead(post.meta.slug);
-
   return (
     <>
       <TopBar />
-      <ChapterReader chapters={chapters} reduceMotion={reduceMotion} onComplete={onComplete} />
-      <div className="post-end">
-        <div className="end-mark">{t('post.end')}</div>
-        <div className="end-note">{t('post.endNote')}</div>
-        <nav className="post-nav">
-          {prev && <Link to={`/${lang}/posts/${prev.meta.slug}`} className="prev">{t('post.prev')}: {prev.chapters[lang][0]?.title}</Link>}
-          {next && <Link to={`/${lang}/posts/${next.meta.slug}`} className="next">{next.chapters[lang][0]?.title} :{t('post.next')}</Link>}
-        </nav>
-      </div>
+      <ChapterReader chapters={chapters} reduceMotion={reduceMotion} onComplete={handleComplete} />
+      {completed && (
+        <div className="post-end">
+          <div className="end-mark">{t('post.end')}</div>
+          <div className="end-note">{t('post.endNote')}</div>
+          <nav className="post-nav">
+            {prev && <Link to={`/${lang}/posts/${prev.meta.slug}`} className="prev">{t('post.prev')}: {prev.chapters[lang][0]?.title}</Link>}
+            {next && <Link to={`/${lang}/posts/${next.meta.slug}`} className="next">{next.chapters[lang][0]?.title} :{t('post.next')}</Link>}
+          </nav>
+        </div>
+      )}
+      <footer className="page-footer">
+        <span>{t('footer.copy')}</span> ·
+        <a href="https://github.com" target="_blank" rel="noreferrer">github</a> ·
+        <a href="/rss.xml">rss</a> ·
+        <a href="https://twitter.com" target="_blank" rel="noreferrer">twitter</a>
+      </footer>
     </>
   );
 }

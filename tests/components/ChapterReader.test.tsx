@@ -20,11 +20,10 @@ function setup(props: Partial<React.ComponentProps<typeof ChapterReader>> = {}) 
 }
 
 describe('ChapterReader (reduceMotion)', () => {
-  it('shows all chapter titles when reduceMotion is true', () => {
+  it('renders all chapters when reduceMotion is true', () => {
     setup();
-    expect(screen.getByText('// one')).toBeInTheDocument();
-    expect(screen.getByText('// two')).toBeInTheDocument();
-    expect(screen.getByText('// three')).toBeInTheDocument();
+    const containers = document.querySelectorAll('.chapter');
+    expect(containers.length).toBe(3);
   });
 
   it('all chapter bodies present in DOM (for SEO/a11y)', () => {
