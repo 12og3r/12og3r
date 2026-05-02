@@ -32,7 +32,7 @@
   animation: pulse 2s infinite;
 }
 @keyframes pulse { 50% { opacity: 0.4; } }
-.topnav { display: flex; gap: 22px; flex: 1; justify-content: center; }
+.topnav { display: flex; gap: 10px; flex: 1; justify-content: center; align-items: center; }
 .topnav a {
   color: var(--fg-dim) !important;
   font-size: 11px;
@@ -71,7 +71,7 @@
 .topbar-skip:hover { color: var(--green); border-color: var(--green); }
 @media (max-width: 800px) {
   .topbar { padding: 12px 12px; gap: 8px; flex-wrap: wrap; }
-  .topnav { gap: 14px; flex: 0 1 auto; order: 3; width: 100%; justify-content: flex-start; padding-top: 4px; border-top: 1px dashed var(--green-line); margin-top: 4px; }
+  .topnav { gap: 8px; flex: 0 1 auto; order: 3; width: 100%; justify-content: flex-start; padding-top: 4px; border-top: 1px dashed var(--green-line); margin-top: 4px; }
   .topnav a { font-size: 10px; }
   .topnav .filename { font-size: 10px; max-width: 70vw; }
 }
