@@ -31,6 +31,20 @@
 .skip-btn:hover { color: var(--green); border-color: var(--green); }
 .chapter { margin: 32px 0; }
 .chapter-body { white-space: pre-wrap; word-wrap: break-word; margin: 0; font-family: inherit; font-size: 14px; line-height: 1.7; }
+.cursor {
+  color: var(--green);
+  margin-left: 1px;
+  text-shadow: 0 0 6px rgba(0, 255, 102, 0.6);
+}
+.cursor-blink {
+  animation: cursor-blink 1.1s steps(2) infinite;
+}
+@keyframes cursor-blink {
+  50% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor-blink { animation: none; }
+}
 .chapter { animation: chapter-in 0.28s ease-out; }
 @keyframes chapter-in {
   from { opacity: 0; transform: translateY(-4px); }

@@ -114,7 +114,17 @@ function ChapterBlock({ chapter, active, showContinue, isMobile, onContinue, onD
   const display = active ? text : chapter.body;
   return (
     <div className="chapter">
-      <pre className="chapter-body">{display}</pre>
+      <pre className="chapter-body">
+        {display}
+        {active && (
+          <span
+            className={`cursor ${done ? 'cursor-blink' : ''}`}
+            aria-hidden="true"
+          >
+            █
+          </span>
+        )}
+      </pre>
       {showCue && (
         <button type="button" className="continue-prompt" onClick={onContinue}>
           {isMobile ? t('post.continue.mobile') : t('post.continue.desktop')}
