@@ -17,7 +17,7 @@ function setup(initialPath = '/en') {
 describe('TopBar', () => {
   it('renders brand', () => {
     setup();
-    expect(screen.getByText(/ROGER@BLOG/i)).toBeInTheDocument();
+    expect(screen.getByText(/Roger's Space/i)).toBeInTheDocument();
   });
 
   it('renders home and about nav links', () => {

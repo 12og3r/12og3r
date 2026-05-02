@@ -11,7 +11,7 @@ export function TopBar() {
   return (
     <div className="topbar">
       <Link to={`/${lang}`} className="brand">
-        <span className="dot" />ROGER@BLOG
+        <span className="dot" />Roger's Space
       </Link>
       <nav className="topnav">
         <Link to={`/${lang}`} className={isHome ? 'active' : ''}>~</Link>

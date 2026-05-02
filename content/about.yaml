@@ -1,7 +1,7 @@
 en: |
   $ cat about.md
 
-  > roger kwan — android engineer @ tiktok.
+  > Roger — android engineer @ tiktok.
 
   Previously: motiff (design tool), paraflow, hulu.
   BUPT '15.
@@ -10,7 +10,7 @@ en: |
 zh: |
   $ cat about.md
 
-  > 关沛廷 — 字节跳动 Android 工程师
+  > Roger — 字节跳动 Android 工程师
 
   此前：Motiff（设计工具）、Paraflow、Hulu。
   北邮 '15 届毕业。
