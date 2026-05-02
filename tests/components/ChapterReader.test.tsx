@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render } from '@testing-library/react';
 import { ChapterReader } from '@/components/ChapterReader';
 import { I18nProvider } from '@/hooks/useI18n';
 import type { Chapter } from '@/types';
@@ -14,7 +13,14 @@ const chapters: Chapter[] = [
 function setup(props: Partial<React.ComponentProps<typeof ChapterReader>> = {}) {
   return render(
     <I18nProvider>
-      <ChapterReader chapters={chapters} reduceMotion={true} onComplete={vi.fn()} {...props} />
+      <ChapterReader
+        chapters={chapters}
+        reduceMotion={true}
+        skipped={false}
+        onSkipRequest={vi.fn()}
+        onComplete={vi.fn()}
+        {...props}
+      />
     </I18nProvider>
   );
 }
@@ -42,26 +48,14 @@ describe('ChapterReader (reduceMotion)', () => {
 
 describe('ChapterReader (interactive)', () => {
   it('only first chapter is rendered initially', () => {
-    render(
-      <I18nProvider>
-        <ChapterReader chapters={chapters} reduceMotion={false} onComplete={vi.fn()} />
-      </I18nProvider>
-    );
+    setup({ reduceMotion: false });
     const containers = document.querySelectorAll('.chapter');
     expect(containers.length).toBe(1);
   });
 
-  it('skip button renders all chapters and calls onComplete', async () => {
-    const onComplete = vi.fn();
-    const user = userEvent.setup();
-    render(
-      <I18nProvider>
-        <ChapterReader chapters={chapters} reduceMotion={false} onComplete={onComplete} />
-      </I18nProvider>
-    );
-    await user.click(screen.getByText(/SKIP/i));
+  it('renders all chapters when skipped prop is true', () => {
+    setup({ reduceMotion: false, skipped: true });
     const containers = document.querySelectorAll('.chapter');
     expect(containers.length).toBe(3);
-    expect(onComplete).toHaveBeenCalled();
   });
 });

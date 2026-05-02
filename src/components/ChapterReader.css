@@ -1,34 +1,4 @@
 .chapter-reader { max-width: 720px; margin: 0 auto; padding: 32px 20px 80px; }
-.chapter-topbar {
-  position: sticky;
-  top: 60px;
-  display: flex;
-  justify-content: space-between;
-  z-index: 150;
-  padding: 8px 0;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(4px);
-  border-bottom: 1px dashed var(--green-line);
-}
-.progress {
-  color: var(--fg-dim);
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
-.skip-btn {
-  color: var(--fg-dim);
-  background: transparent;
-  font: inherit;
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  cursor: pointer;
-  padding: 4px 10px;
-  border: 1px solid var(--green-line-soft);
-  text-transform: uppercase;
-  transition: all 0.15s;
-}
-.skip-btn:hover { color: var(--green); border-color: var(--green); }
 .chapter { margin: 32px 0; }
 .chapter-body { white-space: pre-wrap; word-wrap: break-word; margin: 0; font-family: inherit; font-size: 14px; line-height: 1.7; }
 .cursor {

@@ -13,20 +13,25 @@ export default function PostRoute() {
   const { lang, t } = useI18n();
   const { markRead } = useReadStatus();
   const [posts, setPosts] = useState<Post[] | null>(null);
+  const [skipped, setSkipped] = useState(false);
   const [completed, setCompleted] = useState(false);
   const reduceMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   useEffect(() => { loadAllPosts().then(setPosts); }, []);
 
-  // Reset completion when navigating between posts.
-  useEffect(() => { setCompleted(false); }, [slug]);
+  // Reset reader state when navigating between posts.
+  useEffect(() => { setSkipped(false); setCompleted(false); }, [slug]);
 
   const handleComplete = useCallback(() => {
     if (slug) markRead(slug);
-    // Brief read-pause before the end block appears, mirrors the continue-cue
-    // timing so it doesn't pop in the instant typing finishes.
+    // Brief read-pause before the end block appears.
     setTimeout(() => setCompleted(true), 350);
   }, [markRead, slug]);
+
+  const handleSkip = useCallback(() => {
+    setSkipped(true);
+    handleComplete();
+  }, [handleComplete]);
 
   if (posts === null) return <div className="loading">loading...</div>;
 
@@ -38,10 +43,25 @@ export default function PostRoute() {
   const next = posts[idx - 1];
   const chapters = post.chapters[lang];
 
+  // Display the article like a filename: spaces → underscores, append .md
+  const articleTitle = chapters[0]?.title || post.meta.slug;
+  const articleFilename = `${articleTitle.replace(/\s+/g, '_')}.md`;
+
+  const showSkip = !reduceMotion && !skipped && !completed;
+
   return (
     <>
-      <TopBar />
-      <ChapterReader chapters={chapters} reduceMotion={reduceMotion} onComplete={handleComplete} />
+      <TopBar
+        articleFilename={articleFilename}
+        onSkip={showSkip ? handleSkip : undefined}
+      />
+      <ChapterReader
+        chapters={chapters}
+        reduceMotion={reduceMotion}
+        skipped={skipped}
+        onSkipRequest={handleSkip}
+        onComplete={handleComplete}
+      />
       {completed && (
         <div className="post-end">
           <div className="end-mark">{t('post.end')}</div>

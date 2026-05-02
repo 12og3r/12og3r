@@ -42,8 +42,31 @@
 }
 .topnav a:hover { color: var(--green) !important; background: transparent !important; }
 .topnav a.active { color: var(--green) !important; border-bottom: 1px solid var(--green) !important; padding-bottom: 2px; }
+.topnav .filename {
+  color: var(--cyan);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 280px;
+}
+.topbar-skip {
+  color: var(--fg-dim);
+  background: transparent;
+  font: inherit;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  padding: 4px 9px;
+  border: 1px solid var(--green-line-soft);
+  text-transform: uppercase;
+  transition: all 0.15s;
+}
+.topbar-skip:hover { color: var(--green); border-color: var(--green); }
 @media (max-width: 800px) {
   .topbar { padding: 12px 12px; gap: 8px; flex-wrap: wrap; }
   .topnav { gap: 14px; flex: 0 1 auto; order: 3; width: 100%; justify-content: flex-start; padding-top: 4px; border-top: 1px dashed var(--green-line); margin-top: 4px; }
   .topnav a { font-size: 10px; }
+  .topnav .filename { font-size: 10px; max-width: 70vw; }
 }
