@@ -43,8 +43,7 @@ export default function PostRoute() {
   const next = posts[idx - 1];
   const chapters = post.chapters[lang];
 
-  // Display the article like a filename — TopBar joins it with a `~` and a
-  // dim `/` separator so the whole thing reads as a shell path.
+  // Display the article like a shell command — TopBar prefixes it with `$ cat`.
   const articleTitle = chapters[0]?.title || post.meta.slug;
   const articleFilename = `${articleTitle.replace(/[^\p{L}\p{N}]+/gu, '_').replace(/^_|_$/g, '')}.md`;
 
