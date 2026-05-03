@@ -18,7 +18,7 @@ function setup(props: React.ComponentProps<typeof TopBar> = {}, initialPath = '/
 describe('TopBar', () => {
   it('renders brand', () => {
     setup();
-    expect(screen.getByText(/Roger's Space/i)).toBeInTheDocument();
+    expect(screen.getByText(/\/home\/roger\/blog/i)).toBeInTheDocument();
   });
 
   it('hides ~ on the home page itself (you are already home)', () => {

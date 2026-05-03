@@ -17,7 +17,7 @@ export function TopBar({ articleFilename, onSkip }: Props) {
   return (
     <div className="topbar">
       <Link to={`/${lang}`} className="brand">
-        <span className="dot" />Roger's Space
+        <span className="dot" />/home/roger/blog
       </Link>
       <nav className="topnav">
         {!isHome && (
