@@ -66,6 +66,21 @@
   gap: 8px;
 }
 .main h2 .dim { color: var(--fg-faint); }
+.main h2 .sort-toggle {
+  background: transparent;
+  border: none;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  padding: 0;
+  cursor: pointer;
+  color: var(--fg-faint);
+}
+.main h2 .sort-toggle:hover { color: var(--fg-dim); }
+.main h2 .sort-toggle:focus-visible {
+  outline: 1px solid var(--green);
+  outline-offset: 2px;
+}
 .filter-status {
   display: flex;
   align-items: center;

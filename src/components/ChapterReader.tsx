@@ -103,7 +103,7 @@ function ChapterBlock({ chapter, active, showContinue, isMobile, onContinue, onD
           <span
             className={`cursor ${done && text === chapter.body ? 'cursor-idle' : ''}`}
             aria-hidden="true"
-          >█</span>
+          >▎</span>
         )}
       </pre>
       {showCue && (

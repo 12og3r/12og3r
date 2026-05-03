@@ -26,6 +26,7 @@ export default function Home() {
   const { selected, toggle, clear, matches } = useTagFilter();
   const { isRead } = useReadStatus();
   const [posts, setPosts] = useState<Post[]>([]);
+  const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
 
   useEffect(() => { loadAllPosts().then(setPosts); }, []);
 
@@ -38,7 +39,8 @@ export default function Home() {
     },
   }));
 
-  const filtered = summaries.filter(s => matches(s.meta.tags));
+  const ordered = sortOrder === 'desc' ? summaries : [...summaries].reverse();
+  const filtered = ordered.filter(s => matches(s.meta.tags));
 
   const tagCounts: Record<string, number> = {};
   summaries.forEach(s => s.meta.tags.forEach(tag => { tagCounts[tag] = (tagCounts[tag] || 0) + 1; }));
@@ -69,7 +71,14 @@ export default function Home() {
           </div>
           <h2>
             <span>{t('posts.title')} <span className="dim">{t(selected.length ? 'count.match' : 'count.entries', { n: filtered.length })}</span></span>
-            <span className="dim">{t('posts.sort')}: <span style={{ color: 'var(--green)' }}>{t('posts.sort.newest')}</span></span>
+            <button
+              type="button"
+              className="sort-toggle dim"
+              onClick={() => setSortOrder(o => o === 'desc' ? 'asc' : 'desc')}
+              aria-label={t('posts.sort')}
+            >
+              {t('posts.sort')}: <span style={{ color: 'var(--green)' }}>{t(sortOrder === 'desc' ? 'posts.sort.newest' : 'posts.sort.oldest')}</span>
+            </button>
           </h2>
           {selected.length > 0 && (
             <div className="filter-status">

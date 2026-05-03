@@ -9,6 +9,7 @@
   "posts.title": "// 文章",
   "posts.sort": "排序",
   "posts.sort.newest": "最新 ▾",
+  "posts.sort.oldest": "最早 ▴",
   "filter.label": "筛选：",
   "filter.clear": "[ 清空 ]",
   "post.min": "分钟",

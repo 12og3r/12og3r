@@ -9,6 +9,7 @@
   "posts.title": "// posts",
   "posts.sort": "sort",
   "posts.sort.newest": "newest ▾",
+  "posts.sort.oldest": "oldest ▴",
   "filter.label": "filtering by:",
   "filter.clear": "[ clear ]",
   "post.min": "min",
