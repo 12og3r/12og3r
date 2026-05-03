@@ -42,10 +42,15 @@
 }
 .topnav a:hover { color: var(--green) !important; background: transparent !important; }
 .topnav a.active { color: var(--green) !important; border-bottom: 1px solid var(--green) !important; padding-bottom: 2px; }
-.topnav .path-sep {
-  color: var(--fg-faint);
+.topnav .prompt {
+  color: var(--green);
   font-size: 12px;
   user-select: none;
+}
+.topnav .cmd {
+  color: var(--fg-dim);
+  font-size: 11px;
+  letter-spacing: 0.5px;
 }
 .topnav .filename {
   color: var(--cyan);

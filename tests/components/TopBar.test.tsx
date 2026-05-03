@@ -38,11 +38,13 @@ describe('TopBar', () => {
     expect(screen.getByText('中文')).toBeInTheDocument();
   });
 
-  it('renders article filename with ~ and path separator on non-home pages', () => {
+  it('renders article filename as a shell command on non-home pages', () => {
     setup({ articleFilename: 'No_Farewell_Motiff.md' }, '/en/posts/abc');
-    expect(screen.getByText('~')).toBeInTheDocument();
-    expect(screen.getByText('/')).toBeInTheDocument();
+    expect(screen.getByText('$')).toBeInTheDocument();
+    expect(screen.getByText('cat')).toBeInTheDocument();
     expect(screen.getByText('No_Farewell_Motiff.md')).toBeInTheDocument();
+    // ~ link is replaced by the command on article pages
+    expect(screen.queryByText('~')).not.toBeInTheDocument();
   });
 
   it('renders skip button and triggers onSkip when clicked', async () => {
