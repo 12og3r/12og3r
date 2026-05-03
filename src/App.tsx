@@ -8,7 +8,7 @@ import NotFound from '@/routes/NotFound';
 export default function App() {
   return (
     <I18nProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route path="/" element={<Navigate to="/en" replace />} />
           <Route path="/:lang">
