@@ -13,7 +13,9 @@ interface Props {
 export function TopBar({ articleFilename, onSkip }: Props) {
   const { lang, t } = useI18n();
   const { pathname } = useLocation();
-  const isHome = pathname === `/${lang}` || pathname === `/${lang}/`;
+  // Derive home state from the URL itself — `lang` may be out of sync with
+  // pathname when the user toggles the language switcher without navigating.
+  const isHome = /^\/(en|zh)\/?$/.test(pathname);
   return (
     <div className="topbar">
       <Link to={`/${lang}`} className="brand">

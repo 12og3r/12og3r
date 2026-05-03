@@ -27,6 +27,13 @@ describe('TopBar', () => {
     expect(screen.queryByText('/about')).not.toBeInTheDocument();
   });
 
+  it('hides ~ on /zh home regardless of i18n lang state', () => {
+    // Language switcher only flips the lang state without navigating, so
+    // pathname (/en) and lang (zh) can disagree. Either way, /:lang root is home.
+    setup({}, '/zh');
+    expect(screen.queryByText('~')).not.toBeInTheDocument();
+  });
+
   it('shows ~ on non-home pages', () => {
     setup({}, '/en/posts/abc');
     expect(screen.getByText('~')).toBeInTheDocument();
