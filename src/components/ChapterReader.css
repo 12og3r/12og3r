@@ -1,5 +1,7 @@
-.chapter-reader { max-width: 720px; margin: 0 auto; padding: 32px 20px 80px; }
-.chapter { margin: 32px 0; }
+.chapter-reader { max-width: 720px; margin: 0 auto; padding: 16px 20px 32px; }
+.chapter { margin: 24px 0; }
+.chapter:first-child { margin-top: 0; }
+.chapter:last-child { margin-bottom: 0; }
 .chapter-body { white-space: pre-wrap; word-wrap: break-word; margin: 0; font-family: inherit; font-size: 14px; line-height: 1.7; }
 .cursor {
   color: var(--green);

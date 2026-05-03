@@ -16,6 +16,7 @@ interface Props {
 
 export function ChapterReader({ chapters, reduceMotion, skipped, onSkipRequest, onComplete }: Props) {
   const [unlockedIdx, setUnlockedIdx] = useState(reduceMotion ? chapters.length - 1 : 0);
+  const [autoScroll, setAutoScroll] = useState(true);
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 600;
 
   // External skip → unlock all chapters.
@@ -29,6 +30,7 @@ export function ChapterReader({ chapters, reduceMotion, skipped, onSkipRequest, 
 
   const advance = useCallback(() => {
     setUnlockedIdx(i => Math.min(i + 1, chapters.length - 1));
+    setAutoScroll(true);
   }, [chapters.length]);
 
   useEffect(() => {
@@ -41,6 +43,24 @@ export function ChapterReader({ chapters, reduceMotion, skipped, onSkipRequest, 
     return () => document.removeEventListener('keydown', handler);
   }, [advance, onSkipRequest, reduceMotion]);
 
+  // Manual-scroll detection: any wheel / touch-drag / nav-key from the user
+  // disables auto-follow until the next advance().
+  useEffect(() => {
+    if (!autoScroll || reduceMotion || skipped) return;
+    const cancel = () => setAutoScroll(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End'].includes(e.key)) cancel();
+    };
+    window.addEventListener('wheel', cancel, { passive: true });
+    window.addEventListener('touchmove', cancel, { passive: true });
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('wheel', cancel);
+      window.removeEventListener('touchmove', cancel);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [autoScroll, reduceMotion, skipped]);
+
   return (
     <div className="chapter-reader">
       {chapters.map((ch, i) => {
@@ -52,6 +72,7 @@ export function ChapterReader({ chapters, reduceMotion, skipped, onSkipRequest, 
             key={i}
             chapter={ch}
             active={active}
+            autoScroll={autoScroll}
             showContinue={active && !isLast}
             isMobile={isMobile}
             onContinue={advance}
@@ -66,16 +87,29 @@ export function ChapterReader({ chapters, reduceMotion, skipped, onSkipRequest, 
 interface ChapterBlockProps {
   chapter: Chapter;
   active: boolean;
+  autoScroll: boolean;
   showContinue: boolean;
   isMobile: boolean;
   onContinue: () => void;
   onDone?: () => void;
 }
 
-function ChapterBlock({ chapter, active, showContinue, isMobile, onContinue, onDone }: ChapterBlockProps) {
+function ChapterBlock({ chapter, active, autoScroll, showContinue, isMobile, onContinue, onDone }: ChapterBlockProps) {
   const { t } = useI18n();
   const { text, done } = useTypewriter(chapter.body, { speedMs: 10, enabled: active });
   const [showCue, setShowCue] = useState(false);
+  const cursorRef = useRef<HTMLSpanElement | null>(null);
+
+  // Follow the typewriter cursor as it types.
+  useEffect(() => {
+    if (!active || !autoScroll || !cursorRef.current) return;
+    const rect = cursorRef.current.getBoundingClientRect();
+    const buffer = window.innerHeight * 0.25;
+    if (rect.bottom > window.innerHeight - buffer) {
+      const overflow = rect.bottom - (window.innerHeight - buffer);
+      window.scrollBy({ top: overflow, behavior: 'smooth' });
+    }
+  }, [text, active, autoScroll]);
 
   useEffect(() => {
     if (!showContinue || !done || text !== chapter.body) {
@@ -101,6 +135,7 @@ function ChapterBlock({ chapter, active, showContinue, isMobile, onContinue, onD
         {display}
         {active && (
           <span
+            ref={cursorRef}
             className={`cursor ${done && text === chapter.body ? 'cursor-idle' : ''}`}
             aria-hidden="true"
           >▎</span>
