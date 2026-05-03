@@ -1,4 +1,80 @@
+# dependencies
 node_modules/
+
+# build output
 dist/
+dist-ssr/
+.vite/
+.cache/
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# os
 .DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# editor / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.history/
+
+# env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.json
+credentials.json
+service-account*.json
+.netrc
+
+# local-only files
+*.local
+.local/
+local.*
+
+# tooling caches
+.eslintcache
+.stylelintcache
+.parcel-cache/
+.turbo/
+
+# test / coverage
+coverage/
+.nyc_output/
+*.lcov
+
+# tmp
+tmp/
+temp/
+.tmp/
+*.tmp
+
+# claude / superpowers
 .superpowers/
+.claude/
+CLAUDE.local.md
+
+# personal / drafts (don't push private notes accidentally)
+drafts/
+private/
+notes-private/
+TODO.private.md
+
+# blog-specific
+content/posts/_drafts/
+content/posts/*.draft.mdx
+content/_private/

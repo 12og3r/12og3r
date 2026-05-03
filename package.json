@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && npm run build:rss && npm run build:sitemap",
+    "postbuild": "cp dist/index.html dist/404.html",
     "build:rss": "tsx scripts/build-rss.ts",
     "build:sitemap": "tsx scripts/build-sitemap.ts",
     "preview": "vite preview",
